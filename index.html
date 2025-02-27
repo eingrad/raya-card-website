@@ -37,12 +37,12 @@
 
     <!-- Gas Service Section (Initially Hidden) -->
     <section id="gas-section" class="gas-section">
-        <img src="logo.png" alt="Company Logo" class="logo">
+        <img src="logonew.png" alt="Company Logo" class="logo">
         <h2 class="gas-title">Gas habis waktu Hari Raya?</h2>
         <p class="gas-subtitle">Jangan risau, hubungi kami segera!</p>
         <button onclick="openWhatsAppModal()" class="whatsapp-button">
             📞 WhatsApp Kami
-        </a>
+            </a>
     </section>
 
     <!-- WhatsApp Modal (Initially Hidden) -->
@@ -78,31 +78,40 @@
         class="hidden bottom-5 left-1/2 fixed flex items-center space-x-2 bg-[#efe09c] shadow-lg px-6 py-3 rounded-full text-white hover:scale-105 transition-all -translate-x-1/2 transform">
         🎵
     </button>
-    
+
     <!-- YouTube Music Section (Initially Hidden) -->
-<div id="music-section"
-    class="hidden bottom-5 left-1/2 fixed bg-[#F8ECD9] shadow-lg p-3 rounded-xl -translate-x-1/2 transform">
-    <iframe id="youtube-player" width="250" height="140"
-        src="https://www.youtube-nocookie.com/embed/6rmNc4kFT5w?enablejsapi=1&rel=0&autoplay=0&modestbranding=1&playsinline=1&start=23"
-        frameborder="0" allow="autoplay; encrypted-media" allowfullscreen>
-    </iframe>
-</div>
-    
+    <div id="music-section"
+        class="hidden bottom-5 left-1/2 fixed bg-[#F8ECD9] shadow-lg p-3 rounded-xl -translate-x-1/2 transform">
+        
+        <p class="mb-2 font-semibold text-gray-800 text-sm">🎵 Lagu</p>
+
+        <iframe id="youtube-player" width="250" height="140"
+            src="https://www.youtube-nocookie.com/embed/6rmNc4kFT5w?enablejsapi=1&rel=0&autoplay=0&modestbranding=1&playsinline=1&start=23"
+            frameborder="0" allow="autoplay; encrypted-media" allowfullscreen>
+        </iframe>
+
+        <button onclick="toggleMusicPlayer()" class="bg-red-500 hover:bg-red-600 mt-3 px-4 py-2 rounded-lg text-white">
+            Kembali
+        </button>
+
+    </div>
+
     <!-- JavaScript for Smooth Scrolling and Music Toggle -->
     <script>
         let player;
         let isMusicVisible = false;
+        let isUserScrolling = false;
 
         // Initialize YouTube API when ready
-       function onYouTubeIframeAPIReady() {
-    player = new YT.Player('youtube-player', {
-        events: {
-            'onReady': (event) => {
-                event.target.seekTo(23, true); // Set start time to 23s// Ensure it doesn't play immediately
-            }
+        function onYouTubeIframeAPIReady() {
+            player = new YT.Player('youtube-player', {
+                events: {
+                    'onReady': (event) => {
+                        event.target.seekTo(23, true); // Set start time to 23s// Ensure it doesn't play immediately
+                    }
+                }
+            });
         }
-    });
-}
 
         // Toggle Music Player (Ensures player is initialized before playing)
         function toggleMusicPlayer() {
@@ -142,12 +151,14 @@
 
         // Smooth Scrolling Function
         function smoothScroll(duration) {
+            if (isUserScrolling) return;
+
             const startPosition = window.scrollY;
             const endPosition = document.body.scrollHeight - window.innerHeight;
             const stepSize = (endPosition - startPosition) / (duration / 16);
 
             function scrollStep() {
-                if (window.scrollY + window.innerHeight >= document.body.scrollHeight) {
+                if (isUserScrolling || window.scrollY + window.innerHeight >= document.body.scrollHeight) {
                     return;
                 }
                 window.scrollBy(0, stepSize);
@@ -156,6 +167,14 @@
 
             scrollStep();
         }
+
+        function detectUserScroll() {
+            isUserScrolling = true; // User has taken control
+        }
+
+        window.addEventListener("wheel", detectUserScroll); // Mouse scroll
+        window.addEventListener("touchmove", detectUserScroll); // Mobile scroll
+        window.addEventListener("keydown", detectUserScroll);
 
         // Open Doors Animation + Show Elements
         function openDoors() {
@@ -171,11 +190,11 @@
                 document.getElementById("music-icon").classList.remove("hidden");
 
                 if (player && typeof player.seekTo === "function") {
-                player.seekTo(23, true); // Jump to 23 seconds
-                player.playVideo(); // Start playing
+                    player.seekTo(23, true); // Jump to 23 seconds
+                    player.playVideo(); // Start playing
                 }
 
-                setTimeout(() => smoothScroll(12000), 6000);
+                setTimeout(() => smoothScroll(10000), 2000);
             }, 1000);
         }
 
