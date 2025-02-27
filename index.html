@@ -107,11 +107,19 @@
             player = new YT.Player('youtube-player', {
                 events: {
                     'onReady': (event) => {
-                        event.target.seekTo(23, true); // Set start time to 23s// Ensure it doesn't play immediately
+                        event.target.seekTo(23, true); // Start from 23 seconds
+                        event.target.playVideo(); // Auto play when the player is ready
+                    },
+                    'onStateChange': (event) => {
+                        if (event.data === YT.PlayerState.ENDED) {
+                            event.target.seekTo(23, true); // Restart at 23 seconds
+                            event.target.playVideo();
+                        }
                     }
                 }
             });
         }
+
 
         // Toggle Music Player (Ensures player is initialized before playing)
         function toggleMusicPlayer() {
