@@ -82,7 +82,7 @@
     <!-- YouTube Music Section (Initially Hidden) -->
     <div id="music-section"
         class="hidden bottom-5 left-1/2 fixed bg-[#F8ECD9] shadow-lg p-3 rounded-xl -translate-x-1/2 transform">
-        
+
         <p class="mb-2 font-semibold text-gray-800 text-sm">🎵 Lagu</p>
 
         <iframe id="youtube-player" width="250" height="140"
@@ -90,7 +90,7 @@
             frameborder="0" allow="autoplay; encrypted-media" allowfullscreen>
         </iframe>
 
-        <button onclick="toggleMusicPlayer()" class="bg-red-500 hover:bg-red-600 mt-3 px-4 py-2 rounded-lg text-white">
+        <button onclick="closeMusicUI()" class="bg-red-500 hover:bg-red-600 mt-3 px-4 py-2 rounded-lg text-white">
             Kembali
         </button>
 
@@ -131,6 +131,11 @@
                 }
             }
         }
+
+        function closeMusicUI() {
+            document.getElementById("music-section").classList.add("hidden");
+        }
+
 
         function openWhatsAppModal() {
             document.getElementById("whatsapp-modal").classList.remove("hidden");
