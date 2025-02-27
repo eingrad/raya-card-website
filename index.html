@@ -108,7 +108,6 @@
                 events: {
                     'onReady': (event) => {
                         event.target.seekTo(23, true); // Start from 23 seconds
-                        event.target.playVideo(); // Auto play when the player is ready
                     },
                     'onStateChange': (event) => {
                         if (event.data === YT.PlayerState.ENDED) {
