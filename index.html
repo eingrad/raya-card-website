@@ -98,8 +98,7 @@
     player = new YT.Player('youtube-player', {
         events: {
             'onReady': (event) => {
-                event.target.seekTo(23, true); // Set start time to 23s
-                event.target.pauseVideo(); // Ensure it doesn't play immediately
+                event.target.seekTo(23, true); // Set start time to 23s// Ensure it doesn't play immediately
             }
         }
     });
