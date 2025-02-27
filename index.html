@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Selamat Hari Raya</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <script src="https://www.youtube.com/iframe_api"></script> <!-- YouTube API -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body class="text-center">
+
+    <!-- Overlay with Door Effect -->
+    <div id="overlay" class="overlay">
+        <div class="door-left"></div>
+        <div class="door-right"></div>
+
+        <!-- Hanging Button -->
+        <div class="z-10 relative flex flex-col items-center">
+            <div onclick="openDoors()" class="hanging-button">
+                <p class="text-xl">Ucapan</p>
+                <p class="font-light text-md">OPEN</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Video Background (Initially Hidden) -->
+    <div class="video-container" id="video-container">
+        <video id="play-video" autoplay loop muted playsinline>
+            <source src="tfinal.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+    </div>
+
+    <!-- Gas Service Section (Initially Hidden) -->
+    <section id="gas-section" class="gas-section">
+        <img src="logo.png" alt="Company Logo" class="logo">
+        <h2 class="gas-title">Gas habis waktu Hari Raya?</h2>
+        <p class="gas-subtitle">Jangan risau, hubungi kami segera!</p>
+        <button onclick="openWhatsAppModal()" class="whatsapp-button">
+            📞 WhatsApp Kami
+        </a>
+    </section>
+
+    <!-- WhatsApp Modal (Initially Hidden) -->
+    <div id="whatsapp-modal" class="hidden fixed inset-0 flex justify-center items-center bg-black bg-opacity-50">
+        <div class="bg-[#EFE0A0] shadow-lg p-5 rounded-lg w-[300px] text-center">
+            <h2 class="mb-4 font-semibold text-lg">Cawangan Kami</h2>
+
+            <a href="https://wa.link/whdqc7" target="_blank"
+                class="block bg-green-500 hover:bg-green-600 mb-2 px-4 py-2 rounded font-bold text-white">
+                PCG Melaka
+            </a>
+
+            <a href="https://wa.link/41xq88" target="_blank"
+                class="block bg-green-500 hover:bg-green-600 px-4 py-2 rounded font-bold text-white">
+                PCG Segamat
+            </a>
+
+            <!-- Close Button -->
+            <button onclick="closeWhatsAppModal()" class="mt-4 text-gray-600 hover:text-gray-800">
+                ❌ Tutup
+            </button>
+        </div>
+    </div>
+
+
+    <!-- Footer (Initially Hidden) -->
+    <footer id="footer-section" class="footer">
+        <p>Ucapan ikhlas dari <br><b>Perniagaan Cergas Gas Sdn Bhd</b></p>
+    </footer>
+
+    <!-- Floating Music Button (Initially Hidden) -->
+    <button id="music-icon" onclick="toggleMusicPlayer()"
+        class="hidden bottom-5 left-1/2 fixed flex items-center space-x-2 bg-[#efe09c] shadow-lg px-6 py-3 rounded-full text-white hover:scale-105 transition-all -translate-x-1/2 transform">
+        🎵
+    </button>
+
+    <!-- YouTube Music Section (Initially Hidden) -->
+    <div id="music-section"
+        class="hidden bottom-5 left-1/2 fixed bg-[#F8ECD9] shadow-lg p-3 rounded-xl -translate-x-1/2 transform">
+        <iframe id="youtube-player" width="250" height="140"
+            src="https://www.youtube.com/embed/6rmNc4kFT5w?enablejsapi=1&rel=0&autoplay=0" frameborder="0"
+            allow="autoplay; encrypted-media" allowfullscreen>
+        </iframe>
+    </div>
+
+    <!-- JavaScript for Smooth Scrolling and Music Toggle -->
+    <script>
+        let player;
+        let isMusicVisible = false;
+
+        // Initialize YouTube API when ready
+        function onYouTubeIframeAPIReady() {
+            player = new YT.Player('youtube-player', {});
+        }
+
+        // Toggle Music Player (Ensures player is initialized before playing)
+        function toggleMusicPlayer() {
+            const musicSection = document.getElementById("music-section");
+
+            isMusicVisible = !isMusicVisible;
+
+            if (isMusicVisible) {
+                musicSection.classList.remove("hidden");
+                if (player && typeof player.playVideo === "function") {
+                    player.playVideo();
+                }
+            } else {
+                musicSection.classList.add("hidden");
+                if (player && typeof player.pauseVideo === "function") {
+                    player.pauseVideo();
+                }
+            }
+        }
+
+        function openWhatsAppModal() {
+            document.getElementById("whatsapp-modal").classList.remove("hidden");
+        }
+
+        function closeWhatsAppModal() {
+            document.getElementById("whatsapp-modal").classList.add("hidden");
+        }
+
+        // Close modal when clicking outside the modal box
+        window.addEventListener("click", function (event) {
+            const modal = document.getElementById("whatsapp-modal");
+            if (event.target === modal) {
+                closeWhatsAppModal();
+            }
+        });
+
+
+        // Smooth Scrolling Function
+        function smoothScroll(duration) {
+            const startPosition = window.scrollY;
+            const endPosition = document.body.scrollHeight - window.innerHeight;
+            const stepSize = (endPosition - startPosition) / (duration / 16);
+
+            function scrollStep() {
+                if (window.scrollY + window.innerHeight >= document.body.scrollHeight) {
+                    return;
+                }
+                window.scrollBy(0, stepSize);
+                requestAnimationFrame(scrollStep);
+            }
+
+            scrollStep();
+        }
+
+        // Open Doors Animation + Show Elements
+        function openDoors() {
+            document.getElementById("overlay").classList.add("open");
+
+            setTimeout(() => {
+                document.getElementById("overlay").style.display = "none";
+                document.getElementById("video-container").style.display = "flex";
+                document.getElementById("gas-section").style.display = "flex";
+                document.getElementById("footer-section").style.display = "block";
+
+                // Show music icon after open
+                document.getElementById("music-icon").classList.remove("hidden");
+
+                setTimeout(() => smoothScroll(12000), 6000);
+            }, 1000);
+        }
+
+        // Hide Music Icon when Footer is in View
+        function checkFooterVisibility() {
+            const musicIcon = document.getElementById("music-icon");
+            const footer = document.getElementById("footer-section");
+            const footerRect = footer.getBoundingClientRect();
+
+            if (footerRect.top < window.innerHeight && footerRect.bottom >= 0) {
+                musicIcon.classList.add("hidden"); // Hide music icon when in footer
+            } else {
+                musicIcon.classList.remove("hidden"); // Show music icon when away from footer
+            }
+        }
+
+        // Apply Fade-In on Scroll
+        window.addEventListener("scroll", () => {
+            document.querySelectorAll(".logo, .gas-title, .gas-subtitle, .whatsapp-button, .footer").forEach(el => {
+                if (el.getBoundingClientRect().top < window.innerHeight * 0.9) {
+                    el.classList.add("fade-in");
+                }
+            });
+
+            checkFooterVisibility(); // Check footer visibility on scroll
+        });
+
+        // Ensure Footer Check Runs on Page Load
+        window.addEventListener("load", checkFooterVisibility);
+    </script>
+</body>
+
+</html>
