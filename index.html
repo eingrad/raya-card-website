@@ -164,7 +164,7 @@
 
             const startPosition = window.scrollY;
             const endPosition = document.body.scrollHeight - window.innerHeight;
-            const stepSize = (endPosition - startPosition) / (duration / 10);
+            const stepSize = (endPosition - startPosition) / (duration / 16);
 
             function scrollStep() {
                 if (isUserScrolling || window.scrollY + window.innerHeight >= document.body.scrollHeight) {
