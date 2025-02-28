@@ -86,7 +86,7 @@
         <p class="mb-2 font-semibold text-gray-800 text-sm">🎵 Lagu</p>
 
         <iframe id="youtube-player" width="250" height="140"
-            src="https://www.youtube-nocookie.com/embed/6rmNc4kFT5w?enablejsapi=1&rel=0&autoplay=0&modestbranding=1&playsinline=1&start=23"
+            src="https://www.youtube-nocookie.com/embed/i104O2u3WVY?enablejsapi=1&rel=0&autoplay=0&modestbranding=1&playsinline=1&start=20"
             frameborder="0" allow="autoplay; encrypted-media" allowfullscreen>
         </iframe>
 
@@ -108,7 +108,7 @@
                 events: {
                     'onStateChange': (event) => {
                         if (event.data === YT.PlayerState.ENDED) {
-                            event.target.seekTo(23, true); // Restart at 23 seconds
+                            event.target.seekTo(20, true); // Restart at 23 seconds
                             event.target.playVideo();
                         }
                     }
@@ -164,7 +164,7 @@
 
             const startPosition = window.scrollY;
             const endPosition = document.body.scrollHeight - window.innerHeight;
-            const stepSize = (endPosition - startPosition) / (duration / 16);
+            const stepSize = (endPosition - startPosition) / (duration / 10);
 
             function scrollStep() {
                 if (isUserScrolling || window.scrollY + window.innerHeight >= document.body.scrollHeight) {
@@ -199,7 +199,7 @@
                 document.getElementById("music-icon").classList.remove("hidden");
 
                 if (player && typeof player.seekTo === "function") {
-                    player.seekTo(23, true); // Jump to 23 seconds
+                    player.seekTo(20, true); // Jump to 23 seconds
                     player.playVideo(); // Start playing
                 }
 
